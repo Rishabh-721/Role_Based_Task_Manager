@@ -43,7 +43,7 @@ const userSchema = new mongoose.Schema({
     },
     sessionVersion:{
         type: Number,
-        defautl: 0
+        default: 0
     }
 },{timestamps: true});
 

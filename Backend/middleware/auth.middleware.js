@@ -31,6 +31,12 @@ const auth = async(req, res, next) => {
         })
     }
 
+    if(decoded.sessionVersion !== user.sessionVersion){
+        return res.status(401).json({
+            message: "Session expired"
+        });
+    }
+
     req.user = user;
 
     next();

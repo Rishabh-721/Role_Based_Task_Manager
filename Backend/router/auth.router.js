@@ -6,14 +6,14 @@ const { signup, login, getMe, forgotPassword, verifyMailing, userVerification, c
 const auth = require("../middleware/auth.middleware");
 const roles = require("../middleware/roles.middleware");
 
-routes.post("/sign_Up", signup);
-routes.post("/log_in", login);
-routes.post("/forgotPassword", forgotPassword);
+routes.post("/signup", signup);
+routes.post("/login", login);
+routes.post("/forgotpassword", forgotPassword);
 routes.post("/getverified", verifyMailing);
 routes.get("/verify/:token", userVerification);
-routes.post("/changePassword/:token", changePassword);
+routes.post("/changepassword/:token", changePassword);
 // Authenticated routes
 routes.get("/profile", auth, getMe);
-routes.get("/logoutAll", auth, userLogout);
+routes.get("/logout", auth, userLogout);
 
 module.exports = routes;

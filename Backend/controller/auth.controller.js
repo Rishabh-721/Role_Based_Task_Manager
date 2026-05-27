@@ -86,10 +86,10 @@ const login = async (req, res) => {
 
 
         const data = {
-            "userId": user._id,
-            "userRole": user.role,
-            "purpose": "auth",
-            "userSession": user.sessionVersion,
+            userId: user._id,
+            userRole: user.role,
+            purpose: "auth",
+            sessionVersion: user.sessionVersion
         }
 
         const time = "7d";
@@ -147,7 +147,7 @@ const forgotPassword = async(req, res) => {
 
         const token = await generateToken(data, "1h");
 
-        const resetlink = `http://localhost:5000/user/auth/verify/${token}`;
+        const resetlink = `http://localhost:5000/user/auth/change-password/${token}`;
 
         await resetPassword(user.email, resetlink);
 
@@ -186,7 +186,7 @@ const verifyMailing = async(req, res) => {
 
         const token = await generateToken(data, "1h");
 
-        const verifyLink = `http://localhost:5000/user/auth/changePassword/${token}`;
+        const verifyLink = `http://localhost:5000/user/auth/verify/${token}`;
 
         await verifyUserMail(email, verifyLink);
 
