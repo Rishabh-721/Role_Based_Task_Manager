@@ -16,6 +16,12 @@ const auth = async(req, res, next) => {
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
+    if(decoded.purpose !== "auth"){
+        return res.status(401).json({
+            message: `token is invalid cause it's not for authentication purpose`
+        })
+    }
+
     const user = await userModel.findById(decoded.userId).select("-password");
 
     if(!user){
