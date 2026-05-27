@@ -2,6 +2,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 const connectDB = require("./config/db");
 const authRoutes = require("./router/auth.router");
+const userRoutes = require("./router/user.router");
 
 dotenv.config();
 
@@ -16,7 +17,8 @@ app.get("/", async(req, res) => {
     await res.send(`<h1> apis are working on port: ${port} and on database : ${process.env.MONGO_URL}</h1>`);
 });
 
-app.use("/user/auth", authRoutes);
+app.use("/auth", authRoutes);
+app.use("/user", userRoutes);
 
 app.listen(port, res => {
     console.log(`server is running on port: ${port}`)
