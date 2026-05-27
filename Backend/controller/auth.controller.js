@@ -361,4 +361,4 @@ const userLogout = async(req, res) => {
    
 }
 
-module.exports = {signup, login, getMe, forgotPassword, verifyMailing, userVerification, changePassword};
+module.exports = {signup, login, getMe, forgotPassword, verifyMailing, userVerification, changePassword, userLogout};
