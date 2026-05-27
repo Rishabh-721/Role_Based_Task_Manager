@@ -40,6 +40,10 @@ const userSchema = new mongoose.Schema({
     isVerified:{
         type: Boolean,
         default: false,
+    },
+    sessionVersion:{
+        type: Number,
+        defautl: 0
     }
 },{timestamps: true});
 

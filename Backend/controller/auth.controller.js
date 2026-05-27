@@ -88,7 +88,8 @@ const login = async (req, res) => {
         const data = {
             "userId": user._id,
             "userRole": user.role,
-            "purpose": "auth"
+            "purpose": "auth",
+            "userSession": user.sessionVersion,
         }
 
         const time = "7d";
@@ -114,13 +115,6 @@ const login = async (req, res) => {
         })
     }
 }
-
-const getMe = (req, res) =>{
-    res.status(200).json({
-    success: true,
-    user: req.user,
-    });
-};
 
 const forgotPassword = async(req, res) => {
     try {
@@ -322,7 +316,7 @@ const changePassword = async(req, res) => {
     }
 
     user.password = setpassword;
-    
+    user.sessionVersion += 1;
     await user.save();
 
     res.status(200).json({
@@ -337,5 +331,34 @@ const changePassword = async(req, res) => {
     }
 }
 
+const getMe = (req, res) =>{
+    res.status(200).json({
+    success: true,
+    user: req.user,
+    });
+};
+
+const userLogout = async(req, res) => {
+    try {
+        const user = req.user; 
+
+        if(!user){
+            message: `no user found there is no user in database`
+        }
+
+    user.sessionVersion += 1;
+    await user.save();
+
+    res.status(200).json({
+        message: `user logged out sucessfully`
+    })
+
+    } catch (error) {
+        res.status(500).json({
+            message: `Server Error ${error.message}`
+        })
+    }
+   
+}
 
 module.exports = {signup, login, getMe, forgotPassword, verifyMailing, userVerification, changePassword};
