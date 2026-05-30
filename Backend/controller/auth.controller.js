@@ -72,6 +72,12 @@ const login = async (req, res) => {
             })
         }
 
+        if(user.isBlocked){
+            return res.status(401).json({
+                message: `User access is blocked kindly check if user has been removed from system`
+            })
+        }
+
         const isMatch = await bcrypt.compare(password, user.password);
 
         if(!isMatch){
@@ -100,7 +106,7 @@ const login = async (req, res) => {
             message: `User Logged in Sucessfully`,
             data: {
                 _id: user._id,
-                name: user.name,
+                name: `${user.firstName} ${user.lastName}`,
                 email: user.email,
                 role: user.role,
                 verified: user.isVerified,
@@ -172,6 +178,12 @@ const verifyMailing = async(req, res) => {
         }
 
         const user = await userModel.findOne({email});
+
+        if(!user){
+            return res.status(404).json({ 
+                message: "User is not in database, kindly sign up first." 
+            });
+        }
 
         if(user.isVerified){
             return res.status(400).json({
@@ -343,7 +355,9 @@ const userLogout = async(req, res) => {
         const user = req.user; 
 
         if(!user){
-            message: `no user found there is no user in database`
+            return res.status(404).json({
+                message: `no user found there is no user in database`
+            })
         }
 
     user.sessionVersion += 1;

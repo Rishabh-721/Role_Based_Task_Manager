@@ -34,6 +34,8 @@ const getAllUsers = async(req, res) => {
          });
         }
 
+        filter.isBlocked = false;
+
         const users = await userModel.find(filter);
 
         return res.status(200).json({
@@ -50,5 +52,81 @@ const getAllUsers = async(req, res) => {
     }
 }
 
+const userActivation = async(req, res) => {
+    try {
+        const id = req.params.id;
 
-module.exports = {getAllUsers};
+        if(!id){
+            return res.status(401).json({
+                message: `Please provide user id as its requierd to activate user`
+            })
+        }
+
+        const user = await userModel.findById({_id : id});
+
+        if(!user){
+            return res.status(401).json({
+            message: `User dosen't exist in database kindly check if id is correct`
+            })
+        }
+
+        if(user.isActive === true){
+            return res.status(401).json({
+                message: `user are already active in database`
+            })
+        }
+
+        user.isActive = true;
+        await user.save();
+
+        res.status(200).json({
+            message: `user is activated as per request`,
+            data: user,
+        })
+
+    } catch (error) {
+        res.status(500).json({
+            message: `Server Error: ${error}`
+        })
+    }
+}
+
+const userDeletion = async(req, res) => {
+    try {
+    const id = req.params.id;
+
+    if(!id){
+        return res.status(401).json({
+            message: `Please provide user id as its requierd to activate user`
+        })
+    }
+
+    const user = await userModel.findById({_id : id});
+
+    if(!user){
+        return res.status(401).json({
+        message: `User dosen't exist in database kindly check if id is correct`
+        })
+    }
+
+
+    user.isActive = false;
+    user.isBlocked = true;
+    user.sessionVersion += 1;
+
+    await user.save();
+    
+    res.status(200).json({
+        message: `User has been deleted from system and can't login will be logged out from system in few minutes`
+    })
+
+    } catch (error) {
+       res.status(500).json({
+            message: `Server Error: ${error}`
+        }) 
+    }
+}
+
+
+
+module.exports = {getAllUsers, userActivation, userDeletion};

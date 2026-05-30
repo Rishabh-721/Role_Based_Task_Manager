@@ -108,7 +108,7 @@ const TaskSchema = new mongoose.Schema({
 
     updates:[updateSchema],
 
-    subtasks:[subtaskSchema]
+    subtasks:[subTaskSchema],
 
 },{
     timestamps: true,
