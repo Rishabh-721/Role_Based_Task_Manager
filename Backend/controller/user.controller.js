@@ -57,7 +57,7 @@ const userActivation = async(req, res) => {
         const id = req.params.id;
 
         if(!id){
-            return res.status(401).json({
+            return res.status(400).json({
                 message: `Please provide user id as its requierd to activate user`
             })
         }
@@ -65,13 +65,13 @@ const userActivation = async(req, res) => {
         const user = await userModel.findById({_id : id});
 
         if(!user){
-            return res.status(401).json({
+            return res.status(404).json({
             message: `User dosen't exist in database kindly check if id is correct`
             })
         }
 
         if(user.isActive === true){
-            return res.status(401).json({
+            return res.status(400).json({
                 message: `user are already active in database`
             })
         }
@@ -96,7 +96,7 @@ const userDeactivation = async(req, res) => {
         const id = req.params.id;
 
         if(!id){
-            return res.status(401).json({
+            return res.status(400).json({
                 message: `Please provide user id as its requierd to activate user`
             })
         }
@@ -104,13 +104,13 @@ const userDeactivation = async(req, res) => {
         const user = await userModel.findById({_id : id});
 
         if(!user){
-            return res.status(401).json({
+            return res.status(404).json({
             message: `User dosen't exist in database kindly check if id is correct`
             })
         }
 
         if(user.isActive === false){
-            return res.status(401).json({
+            return res.status(400).json({
                 message: `user are already deactivated in database`
             })
         }
@@ -158,7 +158,7 @@ const userDeletion = async(req, res) => {
     const id = req.params.id;
 
     if(!id){
-        return res.status(401).json({
+        return res.status(400).json({
             message: `Please provide user id as its requierd to activate user`
         })
     }
@@ -166,7 +166,7 @@ const userDeletion = async(req, res) => {
     const user = await userModel.findById({_id : id});
 
     if(!user){
-        return res.status(401).json({
+        return res.status(404).json({
         message: `User dosen't exist in database kindly check if id is correct`
         })
     }
@@ -194,7 +194,7 @@ const restoreUser =  async(req, res) => {
     const id = req.params.id;
 
     if(!id){
-        return res.status(401).json({
+        return res.status(400).json({
             message: `Please provide user id as its requierd to activate user`
         })
     }
@@ -202,16 +202,16 @@ const restoreUser =  async(req, res) => {
     const user = await userModel.findById({_id : id});
 
     if(!user){
-        return res.status(401).json({
+        return res.status(404).json({
         message: `User dosen't exist in database kindly check if id is correct`
         })
     }
 
-    user.isBlocked = true;
+    user.isBlocked = false;
     user.isActive = true;
     user.sessionVersion = 0;
 
-    user.save();
+    await user.save();
 
     res.status(200).json({
         message: `User has been restored in system and can login from system`
@@ -224,6 +224,91 @@ const restoreUser =  async(req, res) => {
     }
 }
 
+const promote = async(req, res) => {
+    try {
+    const id = req.params.id;
+
+    if(!id){
+    return res.status(400).json({
+        message: `Please provide user id as its requierd to activate user`
+    })
+    }
+
+    const user = await userModel.findById(id);
+
+    if(!user){
+        return res.status(404).json({
+        message: `User dosen't exist in database kindly check if id is correct`
+    })
+    }
+
+    if(user.role === "super-admin"){
+        return res.status(400).json({
+            message: `User is alredy super-admin so can't promoted further them to admin`
+        })
+    }
+
+    if(user.role === "admin"){
+        user.role = "super-admin"
+    }else{
+        user.role = "admin"
+    }
+    
+    await user.save();
+
+    res.status(200).json({
+        message: `User is now promoted to ${user.role} with ${user.role} rights`
+    })
+
+    } catch (error) {
+       res.status(500).json({
+            message: `Server Error: ${error}`
+        })  
+    }
+}
+
+const demote = async(req, res) => {
+    try {
+    const id = req.params.id;
+
+    if(!id){
+    return res.status(400).json({
+        message: `Please provide user id as its requierd to activate user`
+    })
+    }
+
+    const user = await userModel.findById(id);
+
+    if(!user){
+        return res.status(404).json({
+        message: `User dosen't exist in database kindly check if id is correct`
+    })
+    }
+
+    if(user.role === "employee"){
+        return res.status(400).json({
+            message: `User is alredy employee so can't demote them further`
+        })
+    }
+
+    if(user.role === "super-admin"){
+        user.role = "admin"
+    }else{
+        user.role = "employee"
+    }
+    
+    await user.save();
+
+    res.status(200).json({
+        message: `User is now demoted to ${user.role} with ${user.role} rights`
+    })
+
+    } catch (error) {
+       res.status(500).json({
+            message: `Server Error: ${error}`
+        })  
+    }
+}
 
 
-module.exports = {getAllUsers, userActivation, userDeletion, userDeactivation, userDeleted, restoreUser};
+module.exports = {getAllUsers, userActivation, userDeletion, userDeactivation, userDeleted, restoreUser, promote, demote};
