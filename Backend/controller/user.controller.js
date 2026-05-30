@@ -91,6 +91,68 @@ const userActivation = async(req, res) => {
     }
 }
 
+const userDeactivation = async(req, res) => {
+    try {
+        const id = req.params.id;
+
+        if(!id){
+            return res.status(401).json({
+                message: `Please provide user id as its requierd to activate user`
+            })
+        }
+
+        const user = await userModel.findById({_id : id});
+
+        if(!user){
+            return res.status(401).json({
+            message: `User dosen't exist in database kindly check if id is correct`
+            })
+        }
+
+        if(user.isActive === false){
+            return res.status(401).json({
+                message: `user are already deactivated in database`
+            })
+        }
+
+        user.isActive = false;
+        await user.save();
+
+        res.status(200).json({
+            message: `user is deactivated as per request`,
+            data: user,
+        })
+
+    } catch (error) {
+        res.status(500).json({
+            message: `Server Error: ${error}`
+        })
+    }
+}
+
+const userDeleted = async(req, res) => {
+    try {
+        const deletedUser = await userModel.find({isBlocked: true});
+
+        if(!deletedUser){
+            return res.status(404).json({
+                message: "unable to find deleted user"
+            })
+        }
+
+
+        res.status(200).json({
+            message: `find deleted user`,
+            data: deletedUser,
+        })
+
+    } catch (error) {
+       res.status(500).json({
+            message: `Server Error: ${error}`
+        }) 
+    }
+}
+
 const userDeletion = async(req, res) => {
     try {
     const id = req.params.id;
@@ -127,6 +189,41 @@ const userDeletion = async(req, res) => {
     }
 }
 
+const restoreUser =  async(req, res) => {
+    try {
+    const id = req.params.id;
+
+    if(!id){
+        return res.status(401).json({
+            message: `Please provide user id as its requierd to activate user`
+        })
+    }
+
+    const user = await userModel.findById({_id : id});
+
+    if(!user){
+        return res.status(401).json({
+        message: `User dosen't exist in database kindly check if id is correct`
+        })
+    }
+
+    user.isBlocked = true;
+    user.isActive = true;
+    user.sessionVersion = 0;
+
+    user.save();
+
+    res.status(200).json({
+        message: `User has been restored in system and can login from system`
+    })
+
+    } catch (error) {
+        res.status(500).json({
+            message: `Server Error: ${error}`
+        }) 
+    }
+}
 
 
-module.exports = {getAllUsers, userActivation, userDeletion};
+
+module.exports = {getAllUsers, userActivation, userDeletion, userDeactivation, userDeleted, restoreUser};

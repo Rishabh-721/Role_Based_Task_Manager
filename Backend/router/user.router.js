@@ -4,12 +4,15 @@ const taskModel = require("../model/task.model");
 const routes = express.Router();
 const auth = require("../middleware/auth.middleware");
 const roles = require("../middleware/roles.middleware");
-const {getAllUsers, userActivation, userDeactivation, userDeletion} 
+const {getAllUsers, userActivation, userDeactivation, userDeletion, userDeleted, restoreUser} 
 = require("../controller/user.controller");
 
 
 routes.get("/allUsers", auth, roles("super-admin","admin"), getAllUsers);
 routes.patch("/activeUser/:id", auth, roles("super-admin"), userActivation);
-routes.patch("/deleteUser/:id", auth, roles("super-admn"), userDeletion);
+routes.param("/deactiveUser/:id", auth, roles("super-admin"), userDeactivation);
+routes.get("/deletedUser", auth, roles("super-admin"), userDeleted);
+routes.patch("/deleteUser/:id", auth, roles("super-admin"), userDeletion);
+routes.patch("/restoreUser/:id", auth, roles("super-admin"), restoreUser);
 
 module.exports = routes;
