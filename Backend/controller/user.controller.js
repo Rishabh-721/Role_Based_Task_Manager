@@ -310,5 +310,123 @@ const demote = async(req, res) => {
     }
 }
 
+const updateSelf = async(req , res) => {
+    try {
+        const user = req.user;
 
-module.exports = {getAllUsers, userActivation, userDeletion, userDeactivation, userDeleted, restoreUser, promote, demote};
+        if(!user){
+            return res.status(404).json({
+                message: `Token has been expired so kindly relogin`
+            })
+        }
+
+        const {email, firstName, lastName, password} = req.body;
+
+        if(!email || !firstName || !lastName || !password){
+            return res.status(404).json({
+                message: `Wrong employee details has been provided by user`
+            })
+        }
+
+        const isMatch = await bcrypt.compare(password, user.password);
+
+        if(!isMatch){
+            return res.status(404).json({
+                message: `password is incorrect can't update user without password`
+            })
+        }
+
+        if(email){user.email = email};
+        if(firstName){user.firstName = firstName};
+        if(lastName){user.lastName = lastName};
+
+        await user.save()
+
+        res.status(200).json({
+            message: `User details has been changed as per request`,
+            data: user,
+        })
+
+    } catch (error) {
+        res.status(500).json({
+            message: `Server Error: ${error}`
+        })
+    }
+}
+
+const changeMail = async(req, res) => {
+    try {
+        
+    const id = req.params.id;
+    const {email} = req.body;
+
+    if (!email) {
+            return res.status(400).json({
+                message: "Please provide an email"
+            });
+    }
+
+    const user = await userModel.findById(id);
+
+    if (!user) {
+        return res.status(404).json({
+            message: "User not found"
+        });
+    }
+
+    const existingUser = await userModel.findOne({ email });
+
+    if(existingUser){
+      return res.status(400).json({
+         message: "Email already exists"
+      });
+    }
+
+        user.email = email;
+        user.isVerified = false;
+    
+        await user.save();
+    return res.status(200).json({
+        message: "Email changed successfully",
+        data: user
+    });
+
+    } catch (error) {
+        res.status(500).json({
+            message: `Server Error: ${error}`
+        })
+    }
+}
+
+const singleUser = async(req, res) => {
+    try {
+        const id = req.params.id;
+
+        if(!id){
+        return res.status(400).json({
+            message: `Please provide user id as its requierd to activate user`
+        })
+        }
+    
+        const user = await userModel.findById(id);
+    
+        if(!user){
+            return res.status(404).json({
+            message: `User dosen't exist in database kindly check if id is correct`
+        })
+        }
+
+        res.status(200).json({
+            message: `User has been updated sucessfully`,
+            data: user,
+        })
+
+    } catch (error) {
+        res.status(500).json({
+            message: `Server Error: ${error}`
+        })
+    }    
+}
+
+
+module.exports = {getAllUsers, singleUser, changeMail, updateSelf, userActivation, userDeletion, userDeactivation, userDeleted, restoreUser, promote, demote};
