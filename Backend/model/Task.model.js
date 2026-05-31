@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const attachmentSchema = new mongoose.Schema({
-    titie:{
+    title:{
         type: String,
         required: true,
         trim: true,
@@ -51,7 +51,7 @@ const subTaskSchema = new mongoose.Schema({
     status:{
         type: String,
         enum:{
-            values: ["pending", "working", "complete"],
+            values: ["pending", "in-progress","submitted", "complete"],
             message: "{VALUE} is not a valid status"
         },
         default: "pending",
@@ -88,7 +88,7 @@ const TaskSchema = new mongoose.Schema({
     status:{
         type: String,
         enum:{
-            values: ["pending", "working", "complete"],
+            values: ["pending", "in-progress","submitted", "complete"],
             message: "{VALUE} is not a valid status"
         },
         default: "pending",
@@ -104,15 +104,26 @@ const TaskSchema = new mongoose.Schema({
         default: false,
     },
 
-    resources:[attachmentSchema],
+    resources:{
+        type:[attachmentSchema],
+        default: []
+    },
 
-    updates:[updateSchema],
-
-    subtasks:[subTaskSchema],
-
+    updates:{
+        type:[updateSchema],
+        default: []
+    },
+    subtasks:{
+        type:[subTaskSchema],
+        default: []
+    }
 },{
     timestamps: true,
 });
+
+TaskSchema.index({ assignedTo: 1 });
+TaskSchema.index({ createdBy: 1 });
+TaskSchema.index({ status: 1 });
 
 
 module.exports = mongoose.model("Task", TaskSchema);

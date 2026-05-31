@@ -320,9 +320,9 @@ const updateSelf = async(req , res) => {
             })
         }
 
-        const {email, firstName, lastName, password} = req.body;
+        const {email, name, position, password} = req.body;
 
-        if(!email || !firstName || !lastName || !password){
+        if(!email || !name || !position || !password){
             return res.status(404).json({
                 message: `Wrong employee details has been provided by user`
             })
@@ -337,8 +337,8 @@ const updateSelf = async(req , res) => {
         }
 
         if(email){user.email = email};
-        if(firstName){user.firstName = firstName};
-        if(lastName){user.lastName = lastName};
+        if(name){user.name = name};
+        if(position){user.position = position};
 
         await user.save()
 

@@ -19,8 +19,8 @@ const seedsuperadmin = async() => {
         const hashedPassword = await hashedpassword(process.env.SUPER_ADMIN_PASSWORD);
 
         await userModel.create({
-            firstName: "Rishabh",
-            lastName: "Rajput",
+            name: "Rishabh Rajput",
+            position: "App Developer",
             email: process.env.SUPER_ADMIN_MAIL,
             password: hashedPassword,
             role: "super-admin",
