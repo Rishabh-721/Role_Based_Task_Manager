@@ -9,9 +9,9 @@ const {getAllUsers, userActivation, userDeactivation, userDeletion, userDeleted,
 
 
 routes.get("/allUsers", auth, roles("super-admin","admin"), getAllUsers);
-routes.patch("/activeUser/:id", auth, roles("super-admin"), userActivation);
-routes.patch("/deactiveUser/:id", auth, roles("super-admin"), userDeactivation);
-routes.get("/deletedUser", auth, roles("super-admin"), userDeleted);
+routes.patch("/activateUser/:id", auth, roles("super-admin"), userActivation);
+routes.patch("/deactivateUser/:id", auth, roles("super-admin"), userDeactivation);
+routes.get("/deletedUsers", auth, roles("super-admin"), userDeleted);
 routes.patch("/deleteUser/:id", auth, roles("super-admin"), userDeletion);
 routes.patch("/restoreUser/:id", auth, roles("super-admin"), restoreUser);
 routes.patch("/promote/:id", auth, roles("super-admin"), promote);

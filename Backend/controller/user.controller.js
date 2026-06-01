@@ -1,5 +1,7 @@
 const userModel = require("../model/user.model");
 const taskModel = require("../model/task.model");
+const bcrypt = require("bcrypt");
+const hashedpassword = require("../utils/hashing.utils");
 
 const getAllUsers = async(req, res) => {
     try {
@@ -315,30 +317,37 @@ const updateSelf = async(req , res) => {
         const user = req.user;
 
         if(!user){
-            return res.status(404).json({
-                message: `Token has been expired so kindly relogin`
+            return res.status(401).json({
+                message: `please login again`
             })
         }
 
         const {email, name, position, password} = req.body;
 
-        if(!email || !name || !position || !password){
-            return res.status(404).json({
-                message: `Wrong employee details has been provided by user`
-            })
+        if (!password) {
+            return res.status(400).json({
+                message: "Password is required"
+            });
         }
 
-        const isMatch = await bcrypt.compare(password, user.password);
+        const currentUser = await userModel.findById(user._id);
+
+        const isMatch = await bcrypt.compare(password, currentUser.password);
 
         if(!isMatch){
-            return res.status(404).json({
-                message: `password is incorrect can't update user without password`
+            return res.status(401).json({
+                message: `Incorrect password`
             })
         }
 
-        if(email){user.email = email};
+        if(email){
+            user.email = email
+            user.isVerified = false
+        };
         if(name){user.name = name};
         if(position){user.position = position};
+
+        
 
         await user.save()
 
@@ -386,6 +395,7 @@ const changeMail = async(req, res) => {
         user.isVerified = false;
     
         await user.save();
+
     return res.status(200).json({
         message: "Email changed successfully",
         data: user

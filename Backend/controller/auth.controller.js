@@ -199,7 +199,7 @@ const verifyMailing = async(req, res) => {
 
         const token = await generateToken(data, "1h");
 
-        const verifyLink = `http://localhost:5000/user/auth/verify/${token}`;
+        const verifyLink = `http://localhost:5171/user/auth/verify/${token}`;
 
         await verifyUserMail(email, verifyLink);
 
@@ -304,7 +304,6 @@ const changePassword = async(req, res) => {
             message: `user is not in database so can't change password`
         });
     }
-
 
     if(!user.isVerified){
         return res.status(400).json({
