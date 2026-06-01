@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const attachmentSchema = new mongoose.Schema({
+const resourceSchema = new mongoose.Schema({
     title:{
         type: String,
         required: true,
@@ -10,120 +10,77 @@ const attachmentSchema = new mongoose.Schema({
         type: String,
         required: true,
         trim: true,
-    },
-    type:{
-        type: String,
-        enum:{
-            values: ["github", "docs", "excel", "other"],
-            message: "{VALUE} is not a valid attachment type",
-        },
-        default: "other",
     }
 },{_id: false});
 
-const updateSchema = new mongoose.Schema({
-    updatedBy:{
+const assignedUserSchema = new mongoose.Schema({
+    user:{
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
         required: true,
     },
-    message:{
-        type: String,
-        required: true,
-        trim: true,
-    },
-
-    attachments:[attachmentSchema],
-
-},{timestamps: true});
-
-const subTaskSchema = new mongoose.Schema({
-    title:{
-        type: String,
-        required: true,
-        trim: true,
-    },
-    assignedTo:[{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-    }],
-
     status:{
         type: String,
-        enum:{
-            values: ["pending", "in-progress","submitted", "complete"],
-            message: "{VALUE} is not a valid status"
-        },
+        enum: ["pending","in-progress","submitted","complete"],
         default: "pending",
     },
+    reviewedBy:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        default: null,
+    },
+    reviewedAt:{
+        type: Date,
+        default: null,
+    }
+}, {_id: false});
 
-    updates:[updateSchema],
-},{timestamps: true});
 
-const TaskSchema = new mongoose.Schema({
-    
-    title:{
+const taskSchema = new mongoose.Schema({
+    title: {
         type: String,
         required: true,
         trim: true,
     },
-
-    description:{
+    description: {
         type: String,
         required: true,
         trim: true,
     },
-
     createdBy:{
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
         required: true,
     },
-
-    assignedTo:[{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-    }],
-
-    status:{
-        type: String,
-        enum:{
-            values: ["pending", "in-progress","submitted", "complete"],
-            message: "{VALUE} is not a valid status"
-        },
-        default: "pending",
-    },
-
-    dueDate:{
-        type: Date,
-        default: null,
-    },
-
-    isDaily:{
+    isPublic:{
         type: Boolean,
         default: false,
     },
-
-    resources:{
-        type:[attachmentSchema],
+    priority: {
+        type: String,
+        enum: ["low", "medium", "high", "urgent"],
+        default: "low",
+    },
+    dueDate: {
+        type: Date,
+        default: null,
+    },
+    isDaily: {
+        type: Boolean,
+        default: false,
+    },
+    resources: {
+        type: [resourceSchema],
         default: []
     },
-
-    updates:{
-        type:[updateSchema],
-        default: []
-    },
-    subtasks:{
-        type:[subTaskSchema],
-        default: []
+    assigned: {
+        type: [assignedUserSchema],
+        default: [],
     }
-},{
-    timestamps: true,
-});
+},{timestamps: true});
 
-TaskSchema.index({ assignedTo: 1 });
-TaskSchema.index({ createdBy: 1 });
-TaskSchema.index({ status: 1 });
+taskSchema.index({ createdBy: 1 });
+taskSchema.index({ "assigned.user": 1 });
+taskSchema.index({ dueDate: 1 });
 
-
-module.exports = mongoose.model("Task", TaskSchema);
+module.exports = mongoose.model("Task", taskSchema);
