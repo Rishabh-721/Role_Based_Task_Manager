@@ -3,6 +3,7 @@ const dotenv = require("dotenv");
 const connectDB = require("./config/db");
 const authRoutes = require("./router/auth.router");
 const userRoutes = require("./router/user.router");
+const taskRoutes = require("./router/task.router");
 
 dotenv.config();
 
@@ -19,6 +20,7 @@ app.get("/", async(req, res) => {
 
 app.use("/auth", authRoutes);
 app.use("/user", userRoutes);
+app.use("/task", taskRoutes);
 
 app.listen(port, res => {
     console.log(`server is running on port: ${port}`)
