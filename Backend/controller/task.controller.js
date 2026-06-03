@@ -58,12 +58,12 @@ try {
         if(user.role === "super-admin"){
          tasks = await taskModel.find({});
         }else if(user.role === "admin" || user.role === "employee"){
-         tasks = await taskModel.find({assignedTo: user._id})};
+         tasks = await taskModel.find({$or: [{assignedTo: user._id},{createdBy: user._id}]})};
     }else{
         if(user.role === "super-admin"){
          tasks = await taskModel.find({status});
         }else if(user.role === "admin" || user.role === "employee"){
-         tasks = await taskModel.find({assignedTo: user._id,status: status});
+         tasks = await taskModel.find({$or: [{assignedTo: user._id},{createdBy: user._id}],status: status});
         }
     }
 
@@ -82,7 +82,7 @@ try {
     res.status(200).json({
         message,
         count: tasks.length,
-        data: [tasks],
+        data: tasks,
     })
 
 } catch (error) {
@@ -168,8 +168,8 @@ try {
     const {title, description, dueDate, status, resources, assignedTo} = req.body;
 
     if(task.createdBy.toString() !== user._id.toString()){
-        return res.status(400).json({
-            message: `task is not created by user`
+        return res.status(403).json({
+            message: "You are not allowed to modify this task"
         })
     }
 
@@ -207,8 +207,8 @@ try {
     const task = await taskModel.findById(id);
 
     if(!task){
-        return res.status(400).json({
-            message: `task is not created by user`
+        return res.status(403).json({
+            message: "You are not allowed to modify this task"
         })
     }
 
@@ -256,8 +256,8 @@ try {
     const task = await taskModel.findById(id);
 
     if(!task){
-        return res.status(400).json({
-            message: `task is not created by user`
+        return res.status(403).json({
+            message: "You are not allowed to modify this task"
         })
     }
   
@@ -274,7 +274,7 @@ try {
     }
 
     if(action === "approve"){
-        task.status = "completed"
+        task.status = "complete"
     }
 
     if(action === "reject"){
@@ -283,6 +283,7 @@ try {
 
 
     task.reviewedBy = user._id;
+    task.reviewedAt = Date.now();
     await task.save();
     
     res.status(200).json({

@@ -12,6 +12,6 @@ routes.get("/task/:id", auth, getOneTask);
 routes.put("/updatetask/:id", auth, roles("admin"), updateTask);
 routes.patch("/statup/:id", auth, roles("employee"), taskStatusUp);
 routes.patch("/reviewed/:id/:action", auth, roles("admin"), taskReviewed);
-routes.delete("/delete", auth, roles("admin"), deleteTask);
+routes.delete("/delete/:id", auth, roles("admin"), deleteTask);
 
 module.exports = routes;
