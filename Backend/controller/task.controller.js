@@ -91,31 +91,6 @@ try {
     })
 }}
 
-const taskCreatedByMe = async(req, res) => {
-try {
-    const user = req.user;
-    if (!user) {
-        return res.status(404).json({
-            message: "User not found"
-        });
-    }
-    const tasks = await taskModel.find({createdBy: user._id});
-    if(!tasks){
-        return res.status(401).json({
-            message: "Task not found"
-        })
-    }
-    res.status(200).json({
-        message: `Task found sucessfully`,
-        count: tasks.length,
-        data: tasks,
-    })
-} catch (error) {
-    res.status(500).json({
-    message: `Server Error: ${error}`
-    })
-}}
-
 const getOneTask = async(req, res) => {
 try {
     const id = req.params.id;
@@ -336,4 +311,4 @@ try {
 }
 }
 
-module.exports = {taskCreation, seeTasks, taskCreatedByMe, getOneTask, updateTask, taskStatusUp, taskReviewed, deleteTask};
+module.exports = {taskCreation, seeTasks, getOneTask, updateTask, taskStatusUp, taskReviewed, deleteTask};
