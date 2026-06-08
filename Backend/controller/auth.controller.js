@@ -10,9 +10,9 @@ dotenv.config();
 
 const signup = async (req, res) => {
     try {
-        const {name, position, email, password} = req.body;
+        const {name, email, password} = req.body;
 
-        if(!name ||!position || !email || !password){
+        if(!name || !email || !password){
             return res.status(400).json({
                 message: `Please provide all required details for user Signup`
             })
@@ -29,7 +29,7 @@ const signup = async (req, res) => {
         const hashedPassword = await hashedpassword(password);
 
         const user = {
-            name, position, email, password : hashedPassword
+            name, email, password : hashedPassword
         }
 
         await userModel.create(user);

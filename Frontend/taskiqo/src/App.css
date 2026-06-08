@@ -1,0 +1,114 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&family=Poppins:wght@600&display=swap');
+
+
+*{
+    box-sizing: border-box;
+    margin: 0;
+    font-family: "Inter", sans-serif;
+}
+
+:root{
+    --primary: #2563eb;
+    --secondary: #7c3aed;
+    --sucess: #22c55e;
+    --progress: #f59e0b;
+    --gray: #64748b;
+    --danger: #ef4444;
+    --text: #0f172a;   
+    --background: #f1f5f9;
+}
+
+.dark:root{
+    --primary: #7c3aed;
+    --secondary: #2563eb;
+    --text: #f1f5f9;   
+    --background: #0f172a;
+}
+
+body{
+    color: var(--text);
+}
+
+/* Header Home Section */
+
+header{
+    height: 100px;
+    margin: 10px 0 10px 25px;
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 5px;
+    justify-content: flex-start;
+}
+
+.heading{
+    font-family: "Poppins",sans-serif;
+    font-weight: 600;
+}
+
+.reguler{
+    font-family: "Inter", sans-serif;
+}
+
+header .logo{
+    width: 80px;
+    margin: 10px;
+}
+
+header .intro{
+    margin: 10px;
+}
+
+header .intro, header caption{
+    width: max-content;
+    text-align: left;
+}
+
+header .title{
+    font-size: 32px;
+}
+
+header .caption{
+    font-size: 16px;
+    color: var(--dark);
+}
+
+.caption .blue{
+    color: var(--primary)
+}
+
+.caption .amber{
+    color: var(--secondary);
+}
+
+hr{
+    border-top: 1px solid var(--gray);
+    border-bottom: 0px solid transparent;
+}
+
+.hero{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-evenly;
+    width: 90vw;
+    margin: 25px 5vw;
+}
+
+.hero-content, .hero-loginsingup{
+    width: 40vw;
+}
+
+.hero-content h2{
+    font-size: 55px;
+}
+
+h2 .blue{
+    color: var(--secondary);
+}
+
+.hero-content p{
+    font-size: 25px;
+}
+
+.error{
+    color: var(--danger);
+}
