@@ -1,7 +1,7 @@
 import React from 'react'
 import logo from "../assets/logo.png"
-import "./logo.css";
-import "../App.css";
+import "./Styles/logo.css";
+import "./Styles/App.css";
 
 const Logo = () => {
   return (

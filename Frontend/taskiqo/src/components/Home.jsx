@@ -7,7 +7,7 @@ const Home = () => {
   const [isLogin, setIsLogin] = useState(false); 
   return (
     <div className='home'>
-      <LeftSide isLogin={isLogin}/>
+      <LeftSide />
       <RightSide />
     </div>
   )
