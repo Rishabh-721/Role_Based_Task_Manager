@@ -1,18 +1,13 @@
-import './App.css'
-import Footer from './components/Footer'
-import Header from './components/Header'
-import Info from './components/Info'
-import Auth from "./components/Auth"
+import {BrowserRouter, Routes, Route} from "react-router-dom";
+import Home from "./components/Home";
 
 const App = () => {
   return (
-    <>
-    <Header />
-    <hr />
-    <Info />
-    <hr />
-    <Footer />
-    </>
+    <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<Home />} />
+    </Routes>
+    </BrowserRouter>
   )
 }
 
