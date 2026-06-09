@@ -1,9 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,600&family=Poppins&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&family=Playfair:opsz,wght@5..1200,700&family=Poppins:wght@600&display=swap');;
 
 *{
     box-sizing: border-box;
     margin: 0;
     font-family: "Inter", sans-serif;
+    font-weight: 400;
 }
 
 
@@ -16,6 +17,7 @@
   --bg:#F8FAFC;
   --surface:#FFFFFF;
   --bg2: #0B1220;
+
   /* Text */
   --text:#0F172A;
   --text-secondary:#64748B;
@@ -50,4 +52,23 @@
 .heading{
     font-family: "Poppins", sans-serif;
     font-weight: 600;
+}
+
+.home-left{
+  height: 100vh;
+  padding: 5vh 5vw;
+  background-color: var(--bg2);
+  color: var(--border);
+}
+
+.productInfo{
+  margin-top: 150px;
+  font-size: 1.5rem;
+}
+
+.different{
+  font-size: 2rem;
+  font-family:  "Playfair Display", serif;
+  font-weight: 100;
+  margin-top: 100px;
 }

@@ -1,15 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import logo from '../assets/logo.png';
+import LeftSide from './home/LeftSide';
+import RightSide from './home/RightSide';
 
 const Home = () => {
+  const [isLogin, setIsLogin] = useState(false); 
   return (
-    <>
-      <div className='left-side'>
-        <img src={logo} className="logo" alt="logo" width={"400px"}/>
-        <h1 className='heading'>Taskiqo</h1>
-      </div>
-      <div className='right-side'></div>
-    </>
+    <div className='home'>
+      <LeftSide isLogin={isLogin}/>
+      <RightSide />
+    </div>
   )
 }
 
