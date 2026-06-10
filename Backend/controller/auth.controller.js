@@ -154,7 +154,7 @@ const forgotPassword = async(req, res) => {
 
         const token = await generateToken(data, "1h");
 
-        const resetlink = `http://localhost:5000/user/auth/change-password/${token}`;
+        const resetlink = `http://localhost:5173/change-password/${token}`;
 
         await resetPassword(user.email, resetlink);
 
@@ -199,7 +199,7 @@ const verifyMailing = async(req, res) => {
 
         const token = await generateToken(data, "1h");
 
-        const verifyLink = `http://localhost:5171/user/auth/verify/${token}`;
+        const verifyLink = `http://localhost:5173/verified/${token}`;
 
         await verifyUserMail(email, verifyLink);
 

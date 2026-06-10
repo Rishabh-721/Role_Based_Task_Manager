@@ -1,7 +1,5 @@
 import React from 'react'
 import logo from "../assets/logo.png"
-import "./Styles/logo.css";
-import "./Styles/App.css";
 
 const Logo = () => {
   return (

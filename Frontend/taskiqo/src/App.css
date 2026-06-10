@@ -157,4 +157,10 @@
 .btnToLink{
   color: var(--primary);
   background-color: transparent;
+  cursor: pointer;
+  padding-left: 5px;
+}
+
+.ul{
+  text-decoration: underline;
 }
