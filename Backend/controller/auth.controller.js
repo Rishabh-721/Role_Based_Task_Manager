@@ -62,7 +62,7 @@ const login = async (req, res) => {
 
         if(!user){
             return res.status(401).json({
-                message: `User is not in database kindly Sign_up to connect`
+                message: `User is not in database kindly Signup to connect`
             })
         }
 

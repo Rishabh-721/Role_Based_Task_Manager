@@ -1,15 +1,70 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { authApi } from "../Api"
 
-const login = () => {
+const Login = () => {
     const navigate = useNavigate();
+
+    const [apiError, setApiError] = useState("");
+
     const [form, setForm] = useState({
       email: "",
       password: "" 
     });
+
+    const [error, setError] =useState({
+      email: "",
+      password: ""
+    })
+
+    const [apiSucess, setApiSucess] = useState(false);
+
+    const handleChange = (e) => {
+      setForm({
+        ...form,
+        [e.target.name]: e.target.value
+      });
+
+      setError({
+        ...error,
+        [e.target.name]: ""
+      });
+
+      setApiError("");
+      setApiSucess(false);
+    }
+  
     
-    const handleSubmit = () => {
+    const handleSubmit = async(e) => {
+      const newError = {
+      email: "",
+      password: ""
+    }
       e.preventDefault();
+
+      if(!form.email){
+      newError.email = "Email is required";
+      } 
+      if(!form.password){
+      newError.password = "Password is required"
+      }else if(form.password.length < 8){
+      newError.password = "Password should be more then 7 letters"
+      }
+
+      setError(newError);
+
+      if(newError.password || newError.email){
+        return;
+      }
+
+      try {
+        const response = await authApi("POST", "login", form)
+        setApiSucess(true);
+        console.log(response);
+      } catch (err) {
+        setApiError(err.response?.data?.message);
+      }
+
       console.log(form);
     }
   return (
@@ -24,16 +79,20 @@ const login = () => {
           name="email"
           placeholder="Email Address" 
           value={form.email}
-          onChange={(e) => setForm({...form,email: e.target.value})}
+          onChange={handleChange}
         />
+
+        {error.email && <span className='error'>{error.email}</span>}
 
         <input
           type="password"
           name="password"
           placeholder="Password"
           value={form.password}
-          onChange={(e) => setForm({...form,password: e.target.value})}
+          onChange={handleChange}
         />
+
+        {error.password && <span className='error'>{error.password}</span>}
 
         <div className="form-links">
           <span className="btnToLink" onClick={() => navigate("/forgot-password")}>
@@ -46,6 +105,9 @@ const login = () => {
         </button>
       </form>
 
+      {apiError && (<span className="apiError">{apiError}</span>)}
+      {apiSucess && (<span className='sucess'>Sucess</span>)}
+
       <div className="home-switch">
         Don't have an account ?
         <span className="btnToLink" onClick={() => navigate("/signup")}>
@@ -56,4 +118,4 @@ const login = () => {
   )
 }
 
-export default login
+export default Login

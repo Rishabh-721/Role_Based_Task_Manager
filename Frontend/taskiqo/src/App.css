@@ -164,3 +164,31 @@
 .ul{
   text-decoration: underline;
 }
+
+.error{
+  color: red;
+  text-align: center;
+}
+
+.apiError{
+  color: red;
+  text-align: center;
+  display: block;
+  margin: 10px 0;
+  padding: 15px;
+  border: 2px solid red;
+  background-color: rgba(255, 0, 0, 15%);
+  border-radius: 1rem;
+}
+
+.sucess{
+  color: green;
+  text-align: center;
+  display: block;
+  margin: 10px 0;
+  padding: 15px;
+  border: 2px solid green;
+  background-color: rgba(0, 255, 0, 15%);
+  border-radius: 1rem;
+}
+
