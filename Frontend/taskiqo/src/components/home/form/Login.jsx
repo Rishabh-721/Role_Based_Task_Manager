@@ -4,43 +4,23 @@ import { authApi } from "../Api"
 
 const Login = () => {
     const navigate = useNavigate();
-
     const [apiError, setApiError] = useState("");
-
-    const [form, setForm] = useState({
-      email: "",
-      password: "" 
-    });
-
-    const [error, setError] =useState({
-      email: "",
-      password: ""
-    })
-
+    const [form, setForm] = useState({email: "",password: "" });
+    const [error, setError] = useState({email: "",password: ""});
     const [apiSucess, setApiSucess] = useState(false);
 
     const handleChange = (e) => {
-      setForm({
-        ...form,
-        [e.target.name]: e.target.value
-      });
-
-      setError({
-        ...error,
-        [e.target.name]: ""
-      });
-
+      setForm({...form,[e.target.name]: e.target.value});
+      setError({...error,[e.target.name]: ""});
       setApiError("");
       setApiSucess(false);
     }
   
     
     const handleSubmit = async(e) => {
-      const newError = {
-      email: "",
-      password: ""
-    }
       e.preventDefault();
+
+      const newError = {email: "",password: ""}
 
       if(!form.email){
       newError.email = "Email is required";
@@ -48,7 +28,7 @@ const Login = () => {
       if(!form.password){
       newError.password = "Password is required"
       }else if(form.password.length < 8){
-      newError.password = "Password should be more then 7 letters"
+      newError.password = "Password must be at least 8 characters"
       }
 
       setError(newError);
