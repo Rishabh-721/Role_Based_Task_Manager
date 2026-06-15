@@ -7,7 +7,7 @@ import Login from "./components/home/form/Login"
 import Signup from "./components/home/form/Signup"
 import ForgotPassword from "./components/home/form/ForgotPassword"
 import VerifyMail from "./components/home/form/VerifyEMail"
-import verfied from "./components/home/form/Verified"
+import Verified from "./components/home/form/Verified";
 
 
 const App = () => {
@@ -20,7 +20,7 @@ const App = () => {
         <Route path="forgot-password" element={<ForgotPassword />} />
         <Route path="verify-email" element={<VerifyMail />} />
         <Route path="change-password/:token" element={<ChangePassword />} />
-        <Route path="verified/:token" element={<verfied/>} />
+        <Route path="verified/:token" element={<Verified />} />
     </Route>
     </Routes>
     </BrowserRouter>

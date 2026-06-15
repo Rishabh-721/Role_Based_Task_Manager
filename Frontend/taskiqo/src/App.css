@@ -192,3 +192,25 @@
   border-radius: 1rem;
 }
 
+
+.modal-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.5);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.modal{
+    width:400px;
+    background:white;
+    padding:2rem;
+    border-radius:16px;
+}
+
+.modal-buttons{
+    margin-top:1.5rem;
+    display:flex;
+    gap:1rem;
+}

@@ -8,6 +8,7 @@ const ForgotPassword = () => {
     const [error, setError] = useState("");
     const [apiError, setApiError] = useState("");
     const [apiSucess, setApiSucess] = useState(false);
+    const [showVerifyModal, setShowVerifyModal] = useState(false);
 
     const handleChange = (e) => {
       setEmail(e.target.value)
@@ -29,8 +30,12 @@ const ForgotPassword = () => {
         setApiSucess(true);
         console.log(response);
       } catch (err) {
-        setApiError(err.response?.data?.message);
-      }
+        const message = err.response?.data?.message;
+        console.log(`Message: ${message}`);
+        setApiError(message);
+
+        if(message?.includes("not verified"))
+          {setShowVerifyModal(true);}}
     
       console.log(email);
     };
@@ -63,6 +68,39 @@ const ForgotPassword = () => {
         <span className="btnToLink" onClick={() => navigate("/")}>
           Back to Login
         </span>
+        {
+  showVerifyModal && (
+    <div className="modal-overlay">
+
+      <div className="modal">
+
+        <h2>Email Not Verified</h2>
+
+        <p>
+          Verify your email before changing your password.
+        </p>
+
+        <div className="modal-buttons">
+
+          <button
+            onClick={() => navigate("/verify-email")}
+          >
+            Verify
+          </button>
+
+          <button
+            onClick={() => setShowVerifyModal(false)}
+          >
+            Cancel
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+  )
+}
       </div>
     </>
   );
