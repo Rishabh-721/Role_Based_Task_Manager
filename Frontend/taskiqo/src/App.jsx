@@ -8,6 +8,11 @@ import Signup from "./components/home/form/Signup"
 import ForgotPassword from "./components/home/form/ForgotPassword"
 import VerifyMail from "./components/home/form/VerifyEMail"
 import Verified from "./components/home/form/Verified";
+import Main from "./components/Main"
+import Dashboard from "./components/main/canvas/Dashboard"
+import Employee from "./components/main/canvas/Employee"
+import Tasks from "./components/main/canvas/Task"
+
 
 
 const App = () => {
@@ -21,6 +26,11 @@ const App = () => {
         <Route path="verify-email" element={<VerifyMail />} />
         <Route path="change-password/:token" element={<ChangePassword />} />
         <Route path="verified/:token" element={<Verified />} />
+    </Route>
+    <Route path="/main" element={<Main />}>
+      <Route index element={<Dashboard />}></Route>
+      <Route path="users" element={<Employee/>}></Route>
+      <Route path="tasks" element={<Tasks/>}></Route>
     </Route>
     </Routes>
     </BrowserRouter>
