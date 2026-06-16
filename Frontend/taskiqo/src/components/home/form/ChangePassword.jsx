@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
-import { authApi } from '../Api';
+import { authApi } from '../../Api';
 
 const ChangePassword = () => {
     const {token} = useParams();

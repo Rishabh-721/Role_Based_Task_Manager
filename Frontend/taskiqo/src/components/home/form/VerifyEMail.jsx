@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import { authApi } from '../Api';
+import { authApi } from '../../Api';
 
 const VerifyEmail = () => {
   const navigate = useNavigate();

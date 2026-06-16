@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate, useParams } from "react-router-dom";
-import { authApi } from '../Api';
+import { authApi } from '../../Api';
 
 const Verified = () => {
   const {token} = useParams();
@@ -17,9 +17,12 @@ const Verified = () => {
       setApiError(err.response?.data?.message);
       setIsVerified(true);
   }
+};
+
   const navigate = useNavigate();
 
   userVerify();
+
   return (
     <>
       {!isVerified ? 
@@ -51,7 +54,6 @@ const Verified = () => {
     </>
   );
 };
-}
 
 export default Verified;
 
