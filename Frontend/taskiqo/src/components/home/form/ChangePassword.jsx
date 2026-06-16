@@ -9,6 +9,7 @@ const ChangePassword = () => {
     const [form, setForm] = useState({newPassword: "",confirmPassword: "" });
     const [error, setError] = useState({newPassword: "",confirmPassword: ""});
     const [apiSucess, setApiSucess] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const handleChange = (e) => {
       setForm({...form,[e.target.name]: e.target.value});
@@ -40,10 +41,12 @@ const ChangePassword = () => {
 
       try {
         const response = await authApi("POST",`changepassword/${token}`,form);
+        setLoading(true);
         setApiSucess(true)
       } catch (err) {
         setApiError(err.response?.data?.message);
-
+      }finally{
+        setLoading(false);
       }
     }
   return (
@@ -73,8 +76,8 @@ const ChangePassword = () => {
 
         {error.confirmPassword && <span className='error'>{error.confirmPassword}</span>}
 
-        <button type="submit">
-          Change Password
+        <button type="submit" disabled={loading}>
+          {isLoading ? "Changing Password...":"Change Password"}
         </button>
       </form>
 

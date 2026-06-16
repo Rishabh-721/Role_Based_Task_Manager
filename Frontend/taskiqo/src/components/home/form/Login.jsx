@@ -8,6 +8,7 @@ const Login = () => {
     const [form, setForm] = useState({email: "",password: "" });
     const [error, setError] = useState({email: "",password: ""});
     const [apiSucess, setApiSucess] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const handleChange = (e) => {
       setForm({...form,[e.target.name]: e.target.value});
@@ -19,7 +20,7 @@ const Login = () => {
     
     const handleSubmit = async(e) => {
       e.preventDefault();
-
+      
       const newError = {email: "",password: ""}
 
       if(!form.email){
@@ -38,14 +39,17 @@ const Login = () => {
       }
 
       try {
+        setLoading(true)
         const response = await authApi("POST", "login", form)
         setApiSucess(true);
+        
         console.log(response);
       } catch (err) {
         setApiError(err.response?.data?.message);
+        
+      }finally{
+        setLoading(false)
       }
-
-      console.log(form);
     }
   return (
     <>
@@ -80,8 +84,8 @@ const Login = () => {
           </span>
         </div>
 
-        <button type="submit">
-          Login
+        <button type="submit" disabled={loading}>
+          {loading ? "Logging in..." : "Login" }
         </button>
       </form>
 

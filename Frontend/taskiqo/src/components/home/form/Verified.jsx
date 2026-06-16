@@ -16,7 +16,6 @@ const Verified = () => {
     } catch (err) {
       setApiError(err.response?.data?.message);
       setIsVerified(true);
-    }
   }
   const navigate = useNavigate();
 
@@ -52,6 +51,7 @@ const Verified = () => {
     </>
   );
 };
+}
 
 export default Verified;
 

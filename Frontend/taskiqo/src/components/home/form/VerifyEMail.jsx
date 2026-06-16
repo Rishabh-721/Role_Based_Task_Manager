@@ -9,6 +9,7 @@ const VerifyEmail = () => {
   const [apiError, setApiError] = useState("");
   const [apiSucess, setApiSucess] = useState("");
   const [countdown, setContdown] = useState(5);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if(!apiSucess) return;
@@ -35,11 +36,14 @@ const VerifyEmail = () => {
     }
 
     try {
+      setLoading(true);
       const response = await authApi("POST", "getverified", {email})
       setApiSucess(true);
       
     } catch (err) {
       setApiError(err.response?.data?.message);
+    }finally{
+      setLoading(false);
     }
   }
   return (
@@ -55,8 +59,8 @@ const VerifyEmail = () => {
           onChange={handleChange}
         />
         {error && <span className='error'>{error}</span>}
-        <button type="submit">
-          Send Verification Mail
+        <button type="submit" disabled={loading}>
+          {loading ? "Sending Verification Mail...":"Send Verification Mail"}
         </button>
       </form>
       {apiError && <span className='apiError'>{apiError}</span>}
