@@ -55,12 +55,12 @@ try {
    let tasks;
 
     if(!status){
-        if(user.role === "super-admin"){
+        if(user.role === "super admin"){
          tasks = await taskModel.find({});
         }else if(user.role === "admin" || user.role === "employee"){
          tasks = await taskModel.find({$or: [{assignedTo: user._id},{createdBy: user._id}]})};
     }else{
-        if(user.role === "super-admin"){
+        if(user.role === "super admin"){
          tasks = await taskModel.find({status});
         }else if(user.role === "admin" || user.role === "employee"){
          tasks = await taskModel.find({$or: [{assignedTo: user._id},{createdBy: user._id}],status: status});

@@ -17,7 +17,7 @@ const getAllUsers = async(req, res) => {
             filter.isVerified = JSON.parse(verified);
         }
 
-        if(req.user.role === "super-admin"){
+        if(req.user.role === "super admin"){
 
         if(role){
             filter.role = role;
@@ -244,14 +244,14 @@ const promote = async(req, res) => {
     })
     }
 
-    if(user.role === "super-admin"){
+    if(user.role === "super admin"){
         return res.status(400).json({
-            message: `User is alredy super-admin so can't promoted further them to admin`
+            message: `User is alredy super admin so can't promoted further them to admin`
         })
     }
 
     if(user.role === "admin"){
-        user.role = "super-admin"
+        user.role = "super admin"
     }else{
         user.role = "admin"
     }
@@ -293,7 +293,7 @@ const demote = async(req, res) => {
         })
     }
 
-    if(user.role === "super-admin"){
+    if(user.role === "super admin"){
         user.role = "admin"
     }else{
         user.role = "employee"

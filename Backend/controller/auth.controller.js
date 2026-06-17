@@ -68,7 +68,7 @@ const login = async (req, res) => {
 
         if(!user.isActive){
             return res.status(404).json({
-                message: "User access is deactivated kindly tell super-admin to activated access"
+                message: "User access is deactivated kindly tell super admin to activated access"
             })
         }
 
