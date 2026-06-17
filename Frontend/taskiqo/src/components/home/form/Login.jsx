@@ -42,7 +42,7 @@ const Login = () => {
         setLoading(true)
         const response = await authApi("POST", "login", form)
         setApiSucess(true);
-        const token = localStorage.setItem("token", `${response?.data?.token}`)
+        const token = sessionStorage.setItem("token", `${response?.data?.token}`)
         navigate("/main")
       } catch (err) {
         setApiError(err.response?.data?.message);

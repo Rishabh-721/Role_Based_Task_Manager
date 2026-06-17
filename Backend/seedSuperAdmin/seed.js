@@ -23,7 +23,7 @@ const seedsuperadmin = async() => {
             position: "App Developer",
             email: process.env.SUPER_ADMIN_MAIL,
             password: hashedPassword,
-            role: "super-admin",
+            role: "super admin",
             isActive: true,
             isVerified: false,
         })

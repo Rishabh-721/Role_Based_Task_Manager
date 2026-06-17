@@ -4,7 +4,7 @@ import axios from 'axios';
 const BASE_URL = "http://localhost:5000";
 
 const authApi = async(method, url, data = null) => {
-  const token = localStorage.getItem("token");
+  const token = sessionStorage.getItem("token");
   return await axios({
     method,
     url: `${BASE_URL}/auth/${url}`,
@@ -18,7 +18,7 @@ const authApi = async(method, url, data = null) => {
 };
 
 const userApi = async(method, url, data = null) => {
-  const token = localStorage.getItem("token");
+  const token = sessionStorage.getItem("token");
 
   if (!token) {
     throw new Error("Please login first");
@@ -35,7 +35,7 @@ const userApi = async(method, url, data = null) => {
 };
 
 const taskApi = async(method, url, data = null) => {
-  const token = localStorage.getItem("token");
+  const token = sessionStorage.getItem("token");
 
   if (!token) {
     throw new Error("Please login first");
