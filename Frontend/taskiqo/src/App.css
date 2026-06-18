@@ -1,0 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&family=Playfair+Display:wght@700&family=Poppins:wght@600&display=swap');
+
+*{
+    box-sizing: border-box;
+    margin: 0;
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+}
+
+.heading{
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+}

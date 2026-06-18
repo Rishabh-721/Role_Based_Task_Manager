@@ -1,0 +1,24 @@
+.logo{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    margin: 10px 0;
+    gap: 10px;
+    color: inherit;
+}
+
+.logoimage{
+    width: 80px;
+    height: 80px;
+}
+
+.intro p{
+    font-size: 32px;
+}
+
+.intro span{
+    font-size: 16px;
+}
+
+.intro .purple{color: blue}
+.intro .amber{color: blueviolet}
