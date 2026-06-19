@@ -2,10 +2,12 @@ import { useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import "./App.css";
+import Logo from './component/01-logo/logo';
 
 import AuthPage from './component/03-Auth/00-AuthPage/AuthPage';
-import Logo from './component/01-logo/logo';
-import Login from '../../../wrong Frontend/srcode/components/home/form/Login';
+
+import Login from '../src/component/03-Auth/01-RightOutlet/Login';
+import Signup from './component/03-Auth/01-RightOutlet/Signup';
 
 function App() {
   return (
@@ -13,7 +15,7 @@ function App() {
     <Routes>
     <Route path='/' element={<AuthPage />}>
       <Route index element={<Login/>}></Route>
-      {/* <Route path='' element={}></Route> */}
+      <Route path='/signup' element={<Signup/>}></Route>
       {/* <Route path='' element={}></Route> */}
       {/* <Route path='' element={}></Route> */}
       {/* <Route path='' element={}></Route> */}

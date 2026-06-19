@@ -3,9 +3,11 @@ import axios from 'axios';
 
 
 
-const BASE_URL = import.meta.env.BACKEND_API;
-const token = localStorage.getItem("token");
+const BASE_URL = import.meta.env.VITE_BACKEND_API;
+
 const API = async({method, endpoint, data = null}) => {
+const token = localStorage.getItem("token");
+
     return await axios({
         method,
         url : `${BASE_URL}/${endpoint}`,
