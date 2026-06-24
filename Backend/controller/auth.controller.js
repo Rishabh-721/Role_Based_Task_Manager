@@ -22,7 +22,7 @@ const signup = async (req, res) => {
 
         if(isExist){
            return res.status(401).json({
-            message: `User already exist in system kindly login`
+            message: `User Already Exist, kindly login`
            }) 
         }
 
@@ -54,7 +54,7 @@ const login = async (req, res) => {
 
         if(!email || !password){
             return res.status(400).json({
-                message: `Please provide all required details for user Login`
+                message: `Plese Provide Requested Info`
             })
         }
 
@@ -62,19 +62,19 @@ const login = async (req, res) => {
 
         if(!user){
             return res.status(401).json({
-                message: `User is not in database kindly Signup to connect`
+                message: `Invalid Email or Password`
             })
         }
 
         if(!user.isActive){
             return res.status(404).json({
-                message: "User access is deactivated kindly tell super admin to activated access"
+                message: "User Dosen't have access to Login"
             })
         }
 
         if(user.isBlocked){
             return res.status(401).json({
-                message: `User access is blocked kindly check if user has been removed from system`
+                message: `User is Blocked from System`
             })
         }
 
@@ -82,7 +82,7 @@ const login = async (req, res) => {
 
         if(!isMatch){
             return res.status(401).json({
-                message: `User deatails are invalid please provide correct user details`
+                message: `Invalid Email or Password`
             })
         }
 

@@ -14,8 +14,8 @@ function App() {
     <BrowserRouter>
     <Routes>
     <Route path='/' element={<AuthPage />}>
-      <Route index element={<Login/>}></Route>
-      <Route path='/signup' element={<Signup/>}></Route>
+      <Route index element={<Login/>} />
+      <Route path='/signup' element={<Signup/>} />
       {/* <Route path='' element={}></Route> */}
       {/* <Route path='' element={}></Route> */}
       {/* <Route path='' element={}></Route> */}
