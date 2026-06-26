@@ -38,6 +38,13 @@ const Signup = () => {
         newError.password = "Password must be atleast 8 latter"
       }
 
+      
+      setError(newError);
+
+      if(newError.name || newError.email || newError.password){
+        return;
+      }
+
       try {
         setLoading(true);
         const response = await API({method: "POST", endpoint: "auth/signup", data: form});
@@ -46,8 +53,9 @@ const Signup = () => {
       } catch (error) {
         const message = error.response?.data?.message;
         setApiError(message);
+        setApiSucess(false);
       }finally{
-        setLoading(false)
+        setLoading(false);
       }
     }
   return (
@@ -65,7 +73,7 @@ const Signup = () => {
         <FormInput type="password" info="Password" name="password" value={form.password} onChange={handleChange} />
         {error.password && <span className='error'>{error.password}</span>}
 
-        <Btn type="submit" text="Sign Up" loginText="Signing up..." loading={loading} className="primary-btn" />
+        <Btn type="submit" text="Sign Up" loadingText="Signing up..." loading={loading} className="primary-btn" />
         
      </form>
 

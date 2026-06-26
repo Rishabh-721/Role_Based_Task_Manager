@@ -8,6 +8,9 @@ import AuthPage from './component/03-Auth/00-AuthPage/AuthPage';
 
 import Login from '../src/component/03-Auth/01-RightOutlet/Login';
 import Signup from './component/03-Auth/01-RightOutlet/Signup';
+import ForgotPwd from './component/03-Auth/01-RightOutlet/ForgotPwd';
+import Verified from './component/03-Auth/01-RightOutlet/Verified';
+import ChangePwd from './component/03-Auth/01-RightOutlet/changePwd';
 
 function App() {
   return (
@@ -16,10 +19,9 @@ function App() {
     <Route path='/' element={<AuthPage />}>
       <Route index element={<Login/>} />
       <Route path='/signup' element={<Signup/>} />
-      {/* <Route path='' element={}></Route> */}
-      {/* <Route path='' element={}></Route> */}
-      {/* <Route path='' element={}></Route> */}
-      {/* <Route path='' element={}></Route> */}
+      <Route path='/forgot-password' element={<ForgotPwd/>}></Route>
+      <Route path='/verified/:token' element={<Verified />}></Route>
+      <Route path='/change-password/:token' element={<ChangePwd/>}></Route>
     </Route>    
     </Routes>
     </BrowserRouter>

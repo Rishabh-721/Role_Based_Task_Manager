@@ -69,7 +69,7 @@ const Login = () => {
 
       <div className="form-links"><span className="btnToLink" onClick={() => navigate("/forgot-password")}>Forgot Password?</span></div>
     
-      <Btn type="submit"  text="Login" loginText="Logging In..." loading={loading} className="primary-btn"/>
+      <Btn type="submit"  text="Login" loadingText="Logging In..." loading={loading} className="primary-btn"/>
 
     </form>
 

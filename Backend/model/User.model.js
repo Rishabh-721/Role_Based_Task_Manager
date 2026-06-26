@@ -6,6 +6,7 @@ const userSchema = new mongoose.Schema({
         required: true,
         trim: true,
         lowercase: true,
+        minLength: 3,
     },
     email:{
         type: String,
@@ -17,6 +18,7 @@ const userSchema = new mongoose.Schema({
     password:{
         type: String,
         required: true,
+        minLength: 8,
     },
     role:{
         type: String,
